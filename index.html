@@ -1,43 +1,124 @@
 <!doctype html>
-<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <title>JKV AI Career Navigator</title>
 <style>
-body{font-family:Arial;margin:0;background:#f4f7fb;color:#172033}header{background:#0b1f3a;color:white;padding:28px}.wrap{max-width:1050px;margin:auto}.card{background:white;border:1px solid #dbe3ef;border-radius:14px;padding:22px;margin:18px 0}h1,h2{margin-top:0}.grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}label{font-weight:bold;font-size:13px}input,select{width:100%;padding:11px;margin-top:6px;border:1px solid #cbd5e1;border-radius:8px}.chips{display:flex;flex-wrap:wrap;gap:7px;margin-top:8px}.chip,.opt{border:1px solid #cbd5e1;padding:8px 10px;border-radius:8px;cursor:pointer;font-size:13px}.on,.sel{background:#dbeafe;border-color:#2563eb;color:#1d4ed8;font-weight:bold}.full{grid-column:1/-1}button{padding:12px 17px;border:0;border-radius:9px;font-weight:bold;cursor:pointer}.primary{background:#2563eb;color:white}.secondary{background:#e2e8f0}.actions{display:flex;gap:10px;justify-content:flex-end;margin-top:18px;flex-wrap:wrap}.hidden{display:none}.q{border:1px solid #dbe3ef;border-radius:10px;padding:15px;margin:12px 0}.q p{font-weight:bold}.opts{display:flex;flex-wrap:wrap;gap:7px}.scores{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}.score{text-align:center;background:#f8fafc;border:1px solid #dbe3ef;padding:16px;border-radius:10px}.score b{display:block;font-size:29px;margin:6px}.path{border:1px solid #dbe3ef;border-radius:10px;padding:15px;margin:10px 0}.rec{border:2px solid #2563eb;background:#eff6ff}.timeline{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.timeline div{background:#f8fafc;padding:14px;border-radius:9px}table{width:100%;border-collapse:collapse}td,th{padding:9px;border-bottom:1px solid #dbe3ef;text-align:left}@media(max-width:700px){.grid,.scores,.timeline{grid-template-columns:1fr}.full{grid-column:auto}}
-</style></head>
+:root{--navy:#0b1f3a;--blue:#2563eb;--blue2:#eff6ff;--ink:#172033;--muted:#64748b;--line:#dbe3ef;--bg:#f6f8fc;--green:#059669;--orange:#d97706;--red:#dc2626}
+*{box-sizing:border-box}body{margin:0;font-family:Inter,Segoe UI,Arial,sans-serif;background:var(--bg);color:var(--ink)}
+header{background:linear-gradient(135deg,#0b1f3a,#174a80);color:#fff;padding:24px 18px}
+.wrap{max-width:1050px;margin:auto}.brand{font-size:25px;font-weight:800}.tag{margin-top:5px;opacity:.85;font-size:14px}
+main{padding:22px 14px 45px}.card{background:#fff;border:1px solid var(--line);border-radius:16px;padding:24px;box-shadow:0 5px 20px rgba(15,23,42,.05);margin-bottom:16px}
+h1,h2,h3{margin-top:0}.sub{color:var(--muted);line-height:1.55}
+.progress{display:flex;gap:5px;margin:0 0 22px}.step{height:5px;flex:1;background:#e2e8f0;border-radius:10px}.step.active{background:var(--blue)}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.full{grid-column:1/-1}
+label{font-size:13px;font-weight:750;display:block;margin-bottom:6px}
+input,select,textarea{width:100%;padding:12px;border:1px solid #cbd5e1;border-radius:9px;font-size:14px;background:#fff}input:focus,select:focus{outline:2px solid #bfdbfe;border-color:#2563eb}
+.actions{display:flex;justify-content:space-between;gap:10px;margin-top:20px}.right{margin-left:auto}
+button{border:0;border-radius:9px;padding:12px 18px;font-weight:750;cursor:pointer}.primary{background:var(--blue);color:#fff}.secondary{background:#e8eef6;color:#172033}.small{padding:8px 11px;font-size:12px}
+.choice-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:14px}.choice{border:1px solid var(--line);border-radius:12px;padding:17px;cursor:pointer;background:#fff;transition:.15s}.choice:hover{border-color:#93c5fd;transform:translateY(-1px)}.choice.selected{border:2px solid var(--blue);background:var(--blue2)}.choice b{display:block;margin-bottom:6px}.choice span{font-size:12px;color:var(--muted)}
+.search{position:relative;margin:12px 0}.search input{padding-left:38px}.search:before{content:"⌕";position:absolute;left:14px;top:9px;font-size:21px;color:var(--muted)}
+.list{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;max-height:280px;overflow:auto;padding-right:4px}.item{padding:10px;border:1px solid var(--line);border-radius:9px;cursor:pointer;font-size:13px;background:#fff}.item:hover{background:#f8fafc}.item.selected{background:var(--blue2);border-color:#60a5fa;color:#1d4ed8;font-weight:700}.selected-box{min-height:42px;background:#f8fafc;border:1px dashed #cbd5e1;border-radius:10px;padding:8px;margin-top:10px}.tagchip{display:inline-flex;align-items:center;gap:5px;background:#dbeafe;color:#1d4ed8;border-radius:99px;padding:6px 9px;margin:3px;font-size:12px;font-weight:700}.tagchip button{padding:0;background:none;color:#1d4ed8;font-size:15px}
+.question{border:1px solid var(--line);border-radius:12px;padding:16px;margin:12px 0}.question p{font-weight:750;line-height:1.45}.opts{display:flex;flex-wrap:wrap;gap:7px}.opt{border:1px solid #cbd5e1;padding:9px 11px;border-radius:8px;cursor:pointer;font-size:12px}.opt.selected{background:var(--blue2);border-color:#60a5fa;color:#1d4ed8;font-weight:750}
+.hidden{display:none}.scores{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}.score{background:#f8fafc;border:1px solid var(--line);border-radius:12px;text-align:center;padding:16px}.score b{display:block;font-size:30px;margin:7px}.green{color:var(--green)}.orange{color:var(--orange)}.red{color:var(--red)}
+.path{border:1px solid var(--line);border-radius:12px;padding:16px;margin:10px 0}.recommended{border:2px solid var(--blue);background:var(--blue2)}.pill{display:inline-block;padding:4px 8px;border-radius:99px;background:#e0f2fe;color:#075985;font-size:11px;font-weight:800}
+.timeline{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.timeline>div{background:#f8fafc;border:1px solid var(--line);border-radius:10px;padding:14px}
+table{width:100%;border-collapse:collapse}th,td{padding:9px;border-bottom:1px solid var(--line);text-align:left;font-size:13px}
+.note{background:#fff7ed;border:1px solid #fed7aa;padding:12px;border-radius:10px;font-size:13px}
+footer{text-align:center;color:var(--muted);font-size:12px;padding:20px}
+@media(max-width:760px){.grid,.scores,.timeline,.choice-grid{grid-template-columns:1fr}.list{grid-template-columns:1fr 1fr}.full{grid-column:auto}}
+</style>
+</head>
 <body>
-<header><div class="wrap"><b style="font-size:26px">JKV AI Career Navigator</b><div>AI Readiness • Career Resilience • Career Evolution • 5-Year Outlook</div></div></header>
+<header><div class="wrap"><div class="brand">JKV AI Career Navigator</div><div class="tag">AI Readiness • Career Resilience • Career Evolution • 5-Year Outlook</div></div></header>
 <main class="wrap">
-<section id="intro" class="card"><h1>Discover your AI career path</h1><p>This JKV internal pilot analyzes existing technology and industry experience, identifies AI skill gaps, and recommends realistic career-evolution paths.</p><button class="primary" onclick="show('profile')">Start Assessment</button></section>
 
-<section id="profile" class="card hidden"><h2>1. Consultant Profile</h2>
+<section id="welcome" class="card">
+<h1>Find your next AI-ready career move</h1>
+<p class="sub">This JKV pilot looks at your existing technology and industry experience, identifies the AI skills that matter for your career, and suggests realistic next steps. You don't need to start your career over.</p>
+<div class="note"><b>Estimated time:</b> about 7–10 minutes. Your answers are used to personalize the assessment.</div>
+<div class="actions"><span></span><button class="primary" onclick="go('profile')">Start Assessment →</button></div>
+</section>
+
+<section id="profile" class="card hidden">
+<div class="progress"><span class="step active"></span><span class="step"></span><span class="step"></span><span class="step"></span><span class="step"></span></div>
+<h2>1. Tell us about you</h2><p class="sub">Required fields are marked with *.</p>
 <div class="grid">
-<div><label>Full Name *</label><input id="name"></div><div><label>Email *</label><input id="email" type="email"></div>
-<div><label>Phone *</label><input id="phone"></div><div><label>Current Job Title *</label><input id="title"></div>
-<div><label>Years of Experience *</label><input id="years" type="number" min="0"></div><div><label>Primary Technology *</label><select id="primary"></select></div>
-<div class="full"><label>Technologies / Skills *</label><div id="techs" class="chips"></div></div>
-<div class="full"><label>Business Domains / Industries *</label><div id="domains" class="chips"></div></div>
-<div><label>Current AI Experience</label><select id="aiExp"><option value="0">No practical experience</option><option value="25">Awareness / experimentation</option><option value="50">Working knowledge</option><option value="75">Hands-on projects</option><option value="100">Production / advanced</option></select></div>
-<div><label>Weekly learning time</label><select><option>2–4 hours</option><option>5–7 hours</option><option>8–10 hours</option><option>10+ hours</option></select></div>
-<div class="full"><label>Career preference</label><div id="prefs" class="chips"></div></div></div>
-<div class="actions"><button class="secondary" onclick="show('intro')">Back</button><button class="primary" onclick="start()">Continue</button></div></section>
+<div><label>Full Name *</label><input id="name"></div>
+<div><label>Email *</label><input id="email" type="email"></div>
+<div><label>Phone *</label><input id="phone"></div>
+<div><label>Current Job Title *</label><input id="title" placeholder="e.g. Senior Java Developer"></div>
+<div><label>Years of Experience *</label><input id="years" type="number" min="0" max="50"></div>
+<div><label>How much time can you spend learning each week?</label><select id="learn"><option>2–4 hours</option><option>5–7 hours</option><option>8–10 hours</option><option>10+ hours</option></select></div>
+</div>
+<div class="actions"><button class="secondary" onclick="go('welcome')">← Back</button><button class="primary" onclick="profileNext()">Continue →</button></div>
+</section>
 
-<section id="assessment" class="card hidden"><h2>2. AI Readiness Assessment</h2><p>Use the closest answer. “Not applicable” is available.</p><div id="questions"></div><div class="actions"><button class="secondary" onclick="show('profile')">Back</button><button class="primary" onclick="report()">Generate Career Outlook</button></div></section>
+<section id="technology" class="card hidden">
+<div class="progress"><span class="step active"></span><span class="step active"></span><span class="step"></span><span class="step"></span><span class="step"></span></div>
+<h2>2. What's your technical background?</h2>
+<p class="sub">First choose the area closest to your current career. Then select your primary technology.</p>
+<div id="families" class="choice-grid"></div>
+<div id="techArea" class="hidden">
+<h3 style="margin-top:22px">Choose your primary technology</h3>
+<div id="primaryChoices" class="choice-grid"></div>
+<h3 style="margin-top:22px">Other technologies you've worked with</h3>
+<p class="sub">You don't need to list everything. Add the technologies most relevant to your career.</p>
+<div class="search"><input id="techSearch" placeholder="Search technologies, e.g. Oracle, Java, AWS..." oninput="filterTech()"></div>
+<div id="techList" class="list"></div>
+<div id="techSelected" class="selected-box"><span class="sub">No additional technologies selected yet.</span></div>
+</div>
+<div class="actions"><button class="secondary" onclick="go('profile')">← Back</button><button class="primary" onclick="technologyNext()">Continue →</button></div>
+</section>
+
+<section id="domain" class="card hidden">
+<div class="progress"><span class="step active"></span><span class="step active"></span><span class="step active"></span><span class="step"></span><span class="step"></span></div>
+<h2>3. What industries have you worked in?</h2>
+<p class="sub">Select all relevant industries. Choose your primary industry first.</p>
+<div class="search"><input id="domainSearch" placeholder="Search industries..." oninput="filterDomains()"></div>
+<div id="domainList" class="list"></div>
+<div id="domainSelected" class="selected-box"><span class="sub">No industries selected yet.</span></div>
+<div class="actions"><button class="secondary" onclick="go('technology')">← Back</button><button class="primary" onclick="domainNext()">Continue →</button></div>
+</section>
+
+<section id="ai" class="card hidden">
+<div class="progress"><span class="step active"></span><span class="step active"></span><span class="step active"></span><span class="step active"></span><span class="step"></span></div>
+<h2>4. How are you using AI today?</h2>
+<p class="sub">This is not a test. Choose the option that best reflects your real experience.</p>
+<div id="aiQuestions"></div>
+<div class="actions"><button class="secondary" onclick="go('domain')">← Back</button><button class="primary" onclick="aiNext()">Continue →</button></div>
+</section>
+
+<section id="career" class="card hidden">
+<div class="progress"><span class="step active"></span><span class="step active"></span><span class="step active"></span><span class="step active"></span><span class="step active"></span></div>
+<h2>5. Where do you want your career to go?</h2>
+<p class="sub">Your preference affects the career recommendation. You can choose more than one.</p>
+<div id="prefs" class="choice-grid"></div>
+<div class="actions"><button class="secondary" onclick="go('ai')">← Back</button><button class="primary" onclick="generateReport()">See My Career Outlook →</button></div>
+</section>
 
 <section id="report" class="hidden">
-<div class="card"><h1 id="rtitle"></h1><p id="rsub"></p><div class="scores">
-<div class="score">AI Readiness<b id="ready">--</b></div><div class="score">Career Resilience<b id="res">--</b></div><div class="score">AI Opportunity<b id="opp">--</b></div><div class="score">Skill Gap<b id="gap">--</b></div></div></div>
+<div class="card"><h1 id="rtitle"></h1><p class="sub" id="rsub"></p><div class="scores">
+<div class="score">AI Readiness<b id="ready">--</b><small>AI preparedness</small></div>
+<div class="score">Career Resilience<b id="res">--</b><small>Strength of current foundation</small></div>
+<div class="score">AI Opportunity<b id="opp">--</b><small>Upside from adding AI</small></div>
+<div class="score">Skill Gap<b id="gap">--</b><small>Priority learning needed</small></div>
+</div></div>
 <div class="card"><h2>Executive Summary</h2><p id="summary"></p></div>
 <div class="card"><h2>Career Evolution</h2><div id="paths"></div></div>
 <div class="card"><h2>Why this path?</h2><p id="why"></p></div>
-<div class="card"><h2>Priority Skills</h2><table><thead><tr><th>Priority</th><th>Skill</th><th>Reason</th></tr></thead><tbody id="skills"></tbody></table></div>
-<div class="card"><h2>12-Month Roadmap</h2><div class="timeline"><div><b>0–3 months</b><p id="m1"></p></div><div><b>3–6 months</b><p id="m2"></p></div><div><b>6–12 months</b><p id="m3"></p></div></div></div>
-<div class="card"><h2>5-Year Career Outlook</h2><p id="five"></p><small>Directional outlook, not a job or salary guarantee.</small></div>
-<div class="card"><h2>Submit to JKV</h2><p>For this pilot, the button opens your email program with the consultant's assessment summary.</p><button class="secondary" onclick="window.print()">Print / Save PDF</button> <button class="primary" onclick="mail()">Send Result to JKV</button></div>
-</section></main>
+<div class="card"><h2>Priority Skills</h2><table><thead><tr><th>Priority</th><th>Skill</th><th>Why it matters</th></tr></thead><tbody id="skills"></tbody></table></div>
+<div class="card"><h2>12-Month Roadmap</h2><div class="timeline"><div><b>0–3 Months</b><p id="m1"></p></div><div><b>3–6 Months</b><p id="m2"></p></div><div><b>6–12 Months</b><p id="m3"></p></div></div></div>
+<div class="card"><h2>5-Year Career Outlook</h2><p id="five"></p><span class="pill">Directional outlook — not a job or salary guarantee</span></div>
+<div class="card"><h2>Submit to JKV</h2><p class="sub">For this pilot, the button prepares an email containing the consultant's assessment summary.</p><button class="secondary" onclick="window.print()">Print / Save PDF</button> <button class="primary" onclick="mail()">Send Result to JKV</button></div>
+</section>
+</main>
+<footer>JKV International • AI Career Navigator • Internal Pilot</footer>
 
 <script>
-const domains=["Banking","Financial Services","Capital Markets","Insurance","Healthcare","Healthcare Payers","Healthcare Providers","Airlines & Aviation","Retail","E-commerce","Manufacturing","Automotive","Telecommunications","Pharmaceuticals","Life Sciences","Energy & Utilities","Government","Technology","Logistics","Travel & Hospitality","Media","Real Estate","Education","Semiconductor"];
-const families={
+const DOMAINS=["Banking","Financial Services","Capital Markets","Insurance","Healthcare","Healthcare Payers","Healthcare Providers","Airlines & Aviation","Retail","E-commerce","Manufacturing","Automotive","Telecommunications","Pharmaceuticals","Life Sciences","Energy & Utilities","Government","Technology","Logistics","Travel & Hospitality","Media","Real Estate","Education","Semiconductor"];
+const FAMILIES={
 "Software Development":["Java","Spring Boot",".NET / C#","Python","JavaScript / TypeScript","React / Angular","Node.js","C++","COBOL / Mainframe"],
 "ERP / Enterprise":["SAP FICO","SAP MM","SAP SD","SAP PP","SAP EWM","SAP ABAP","SAP BTP","SAP SuccessFactors","Oracle Fusion ERP","Oracle EBS","Oracle HCM","Oracle SCM","Microsoft Dynamics 365","Workday","PeopleSoft","NetSuite","Infor","IFS","JD Edwards","UKG"],
 "Database / Data":["Oracle DBA","SQL Server DBA","PostgreSQL","MySQL","DB2","Teradata","MongoDB","Snowflake","Databricks","Data Engineering","Data Analytics","Power BI","Tableau","Kafka","Spark"],
@@ -46,68 +127,71 @@ const families={
 "Security / IAM":["IAM","IGA","PAM","CIEM","Okta","Microsoft Entra ID","SailPoint","CyberArk","Ping Identity","Zero Trust","Cloud Security","SIEM / SOC","DevSecOps","AI Security","Agentic IAM"],
 "ITSM / CRM / Integration":["ServiceNow","Salesforce","MuleSoft","Boomi","Informatica","API Management","ITSM"],
 "AI / ML / GenAI":["Machine Learning","Deep Learning","Generative AI","LLMs","RAG","Vector Databases","AI Agents","MCP","LLMOps","AI Evaluation","AI Governance","AI Observability"]};
-const prefs=["Stay close to my current technology","Move toward AI / GenAI","Move toward Architecture","Move toward Cloud","Move toward Data","Move toward Cybersecurity","Move toward AI Governance","Move toward Consulting / Transformation","Move toward Management","I'm not sure — recommend for me"];
-const common=[
+const AIQ=[
 ["AI fundamentals","How comfortable are you explaining core AI and Generative AI concepts?"],
 ["LLMs","How comfortable are you working with LLMs and understanding their limitations?"],
-["RAG","How familiar are you with Retrieval-Augmented Generation?"],
+["RAG","How familiar are you with Retrieval-Augmented Generation (RAG)?"],
 ["AI Agents","How familiar are you with AI agents, tool calling and orchestration?"],
 ["AI Evaluation","Can you evaluate AI accuracy, hallucination, safety and consistency?"],
 ["AI Security","How familiar are you with prompt injection, data leakage and AI security risks?"],
 ["AI-assisted work","How effectively do you use AI tools in your current work?"],
 ["Hands-on AI","Have you built or contributed to a practical AI/GenAI project?"]];
-const special={
+const SPECIAL={
 "QA / Testing":[["AI test generation","Have you used AI to generate or improve test cases?"],["LLM testing","Have you tested LLM outputs for accuracy or hallucination?"],["Agent testing","Have you tested AI agents or agentic workflows?"],["Synthetic data","Have you used AI to generate synthetic test data?"]],
 "Database / Data":[["AI SQL","Have you used AI-assisted SQL or natural-language database querying?"],["Vector data","Have you worked with vector databases or vector search?"],["AI data pipelines","Have you worked on data pipelines supporting AI applications?"],["Database AI","Have you used AI-assisted database performance/anomaly analysis?"]],
 "ERP / Enterprise":[["ERP AI","Have you worked with AI features/copilots/assistants within your ERP platform?"],["AI workflows","Have you identified ERP processes that could be augmented by AI?"],["Enterprise AI","Have you integrated GenAI with ERP data or workflows?"]],
 "Security / IAM":[["AI security","Have you worked on AI security or model/data protection?"],["Identity for AI","Have you considered access controls for AI applications or agents?"],["Agentic IAM","Have you explored identity/authorization for AI agents?"]],
 "Cloud / DevOps":[["Cloud AI","Have you deployed or integrated AI services on AWS, Azure or GCP?"],["AIOps","Have you used AI/ML for operations or incident analysis?"],["AI platform","Have you worked on infrastructure supporting AI workloads?"]],
 "Software Development":[["LLM APIs","Have you integrated an LLM API into an application?"],["RAG application","Have you built or contributed to a RAG application?"],["AI agents","Have you built or integrated an AI agent with tools/APIs?"],["AI coding","Do you use AI coding assistants effectively in development?"]]};
-let currentResult=null;
-const allTech=()=>Object.values(families).flat();
-function fam(t){for(const f in families)if(families[f].includes(t))return f;return"Software Development"}
-function chips(id,arr){const e=document.getElementById(id);e.innerHTML=arr.map(x=>`<span class="chip" onclick="this.classList.toggle('on')">${x}</span>`).join("")}
-function selected(id){return[...document.querySelectorAll("#"+id+" .on")].map(x=>x.textContent)}
-function show(id){["intro","profile","assessment","report"].forEach(x=>document.getElementById(x).classList.toggle("hidden",x!=id));scrollTo(0,0)}
-document.getElementById("primary").innerHTML=allTech().map(x=>`<option>${x}</option>`).join("");
-chips("techs",allTech());chips("domains",domains);chips("prefs",prefs);
-function start(){for(const id of["name","email","phone","title","years"])if(!document.getElementById(id).value.trim()){alert("Please complete all mandatory fields.");return}if(!selected("techs").length||!selected("domains").length){alert("Select at least one technology and one business domain.");return}
-let f=fam(document.getElementById("primary").value),qs=common.concat(special[f]||[]);qs.push(["Career resilience","How much of your current work is repetitive or highly standardized?"]);qs.push(["Architecture","How comfortable are you making solution/architecture decisions?"]);
-document.getElementById("questions").innerHTML=qs.map((q,i)=>`<div class="q"><p>${i+1}. ${q[1]}</p><div class="opts">${["No exposure","Awareness","Working knowledge","Hands-on","Advanced / can lead","Not applicable"].map((x,j)=>`<span class="opt" data-v="${j}" onclick="pick(this)">${x}</span>`).join("")}</div></div>`).join("");show("assessment")}
-function pick(x){[...x.parentElement.children].forEach(y=>y.classList.remove("sel"));x.classList.add("sel")}
-function report(){
-const qs=[...document.querySelectorAll(".q")];if(qs.some(q=>!q.querySelector(".sel"))){alert("Please answer every question. Use Not applicable where needed.");return}
-const vals=qs.map(q=>{let v=+q.querySelector(".sel").dataset.v;return v===5?null:v*25}).filter(v=>v!==null);
-const ai=+document.getElementById("aiExp").value,ready=Math.round(vals.reduce((a,b)=>a+b,0)/vals.length*.75+ai*.25),years=+document.getElementById("years").value||0;
-const tech=document.getElementById("primary").value,fs=fam(tech),ts=selected("techs"),ds=selected("domains");
-let res=Math.round(55+Math.min(years,15)*1.4+ds.length*2+ts.length*1.5-(100-ready)*.12);if(fs==="QA / Testing"&&ts.includes("Manual QA")&&!ts.includes("Selenium")&&!ts.includes("Playwright"))res-=12;res=Math.max(20,Math.min(95,res));
-const base={"AI / ML / GenAI":94,"Software Development":90,"Database / Data":88,"Security / IAM":92,"Cloud / DevOps":91,"QA / Testing":86,"ERP / Enterprise":82,"ITSM / CRM / Integration":84};const opp=Math.min(98,Math.round((base[fs]||82)+ds.length*1.5+Math.max(0,10-ready/10))),gap=100-ready;
+const PREFS=["Stay close to my current technology","Move toward AI / GenAI","Move toward Architecture","Move toward Cloud","Move toward Data","Move toward Cybersecurity","Move toward AI Governance","Move toward Consulting / Transformation","Move toward Management","I'm not sure — recommend for me"];
+let family="",primary="",otherTech=[],selectedDomains=[],aiAnswers=[],currentResult=null;
+const allTech=()=>Object.values(FAMILIES).flat();
+function go(id){["welcome","profile","technology","domain","ai","career","report"].forEach(x=>document.getElementById(x).classList.toggle("hidden",x!==id));window.scrollTo(0,0)}
+function familyOf(t){for(const f in FAMILIES)if(FAMILIES[f].includes(t))return f;return"Software Development"}
+function renderFamilies(){document.getElementById("families").innerHTML=Object.keys(FAMILIES).map(f=>`<div class="choice" onclick="chooseFamily(this,'${f.replace(/'/g,"\\'")}')"><b>${f}</b><span>${FAMILIES[f].slice(0,4).join(" • ")}${FAMILIES[f].length>4?" • …":""}</span></div>`).join("")}
+function chooseFamily(el,f){document.querySelectorAll("#families .choice").forEach(x=>x.classList.remove("selected"));el.classList.add("selected");family=f;document.getElementById("techArea").classList.remove("hidden");renderPrimary();renderTechList();document.getElementById("techSearch").value="";document.getElementById("techList").scrollIntoView({behavior:"smooth",block:"nearest"})}
+function renderPrimary(){document.getElementById("primaryChoices").innerHTML=FAMILIES[family].map(t=>`<div class="choice ${primary===t?"selected":""}" onclick="choosePrimary(this,'${t.replace(/'/g,"\\'")}')"><b>${t}</b><span>Set as primary technology</span></div>`).join("")}
+function choosePrimary(el,t){primary=t;document.querySelectorAll("#primaryChoices .choice").forEach(x=>x.classList.remove("selected"));el.classList.add("selected");renderTechList()}
+function renderTechList(filter=""){const pool=allTech().filter(t=>t!==primary&&(!filter||t.toLowerCase().includes(filter.toLowerCase())));document.getElementById("techList").innerHTML=pool.map(t=>`<div class="item ${otherTech.includes(t)?"selected":""}" onclick="toggleTech('${t.replace(/'/g,"\\'")}',this)">${t}</div>`).join("")||"<div class='sub'>No matching technologies.</div>";renderSelected("techSelected",otherTech)}
+function filterTech(){renderTechList(document.getElementById("techSearch").value)}
+function toggleTech(t,el){if(otherTech.includes(t))otherTech=otherTech.filter(x=>x!==t);else otherTech.push(t);el.classList.toggle("selected");renderSelected("techSelected",otherTech)}
+function renderSelected(id,arr){document.getElementById(id).innerHTML=arr.length?arr.map(x=>`<span class="tagchip">${x}<button onclick="removeTech('${x.replace(/'/g,"\\'")}')">×</button></span>`).join(""):"<span class='sub'>Nothing selected yet.</span>"}
+function removeTech(t){otherTech=otherTech.filter(x=>x!==t);renderTechList(document.getElementById("techSearch").value)}
+function profileNext(){for(const id of["name","email","phone","title","years"])if(!document.getElementById(id).value.trim()){alert("Please complete all mandatory fields.");document.getElementById(id).focus();return}renderFamilies();go("technology")}
+function technologyNext(){if(!family){alert("Please choose your technical area.");return}if(!primary){alert("Please choose your primary technology.");return}renderDomains();go("domain")}
+function renderDomains(filter=""){const pool=DOMAINS.filter(d=>!filter||d.toLowerCase().includes(filter.toLowerCase()));document.getElementById("domainList").innerHTML=pool.map(d=>`<div class="item ${selectedDomains.includes(d)?"selected":""}" onclick="toggleDomain('${d}',this)">${d}</div>`).join("");renderDomainSelected()}
+function filterDomains(){renderDomains(document.getElementById("domainSearch").value)}
+function toggleDomain(d,el){if(selectedDomains.includes(d))selectedDomains=selectedDomains.filter(x=>x!==d);else selectedDomains.push(d);el.classList.toggle("selected");renderDomainSelected()}
+function renderDomainSelected(){document.getElementById("domainSelected").innerHTML=selectedDomains.length?selectedDomains.map(x=>`<span class="tagchip">${x}</span>`).join(""):"<span class='sub'>Select one or more industries.</span>"}
+function domainNext(){if(!selectedDomains.length){alert("Please select at least one industry.");return}renderAI();go("ai")}
+function renderAI(){const qs=[...AIQ,...(SPECIAL[family]||[])];document.getElementById("aiQuestions").innerHTML=qs.map((q,i)=>`<div class="question" data-i="${i}"><p>${i+1}. ${q[1]}</p><div class="opts">${["No exposure","Awareness","Working knowledge","Hands-on","Advanced / can lead","Not applicable"].map((x,j)=>`<span class="opt" data-v="${j}" onclick="pick(this)">${x}</span>`).join("")}</div></div>`).join("")}
+function pick(x){[...x.parentElement.children].forEach(y=>y.classList.remove("selected"));x.classList.add("selected")}
+function aiNext(){if([...document.querySelectorAll(".question")].some(q=>!q.querySelector(".selected"))){alert("Please answer every question. Use Not applicable where appropriate.");return}document.getElementById("prefs").innerHTML=PREFS.map(p=>`<div class="choice" onclick="this.classList.toggle('selected')"><b>${p}</b><span>Career direction preference</span></div>`).join("");go("career")}
+function generateReport(){
+const qs=[...document.querySelectorAll(".question")],vals=qs.map(q=>{const v=+q.querySelector(".selected").dataset.v;return v===5?null:v*25}).filter(v=>v!==null);
+const aiExp=Math.round(vals.reduce((a,b)=>a+b,0)/vals.length),years=+document.getElementById("years").value||0;
+let ready=Math.round(aiExp*.75+(aiExp*.25));let res=Math.round(55+Math.min(years,15)*1.4+selectedDomains.length*2+(otherTech.length+1)*1.5-(100-ready)*.12);
+if(family==="QA / Testing"&&primary==="Manual QA"&&!otherTech.some(x=>["Selenium","Playwright","Cypress"].includes(x)))res-=12;
+res=Math.max(20,Math.min(95,res));
+const base={"AI / ML / GenAI":94,"Software Development":90,"Database / Data":88,"Security / IAM":92,"Cloud / DevOps":91,"QA / Testing":86,"ERP / Enterprise":82,"ITSM / CRM / Integration":84};
+const opp=Math.min(98,Math.round((base[family]||82)+selectedDomains.length*1.5+Math.max(0,10-ready/10))),gap=100-ready;
 let paths,why,skills,m1,m2,m3,five;
-if(fs==="QA / Testing"){paths=["Manual/Automation QA → AI-assisted QA","Automation QA → AI Quality Engineer → AI Evaluation Engineer","QA → AI/Software Engineering → GenAI Engineer"];why="Your testing experience can be upgraded rather than discarded. The strongest opportunity is to add AI testing, LLM evaluation, agent testing and AI observability.";skills=["Modern test automation","LLM testing","RAG/agent evaluation","Synthetic test data","AI observability"];m1="Modern automation + Python";m2="LLM/RAG testing and evaluation";m3="Build an AI quality project";five="Strong if you evolve toward AI Quality Engineering and AI evaluation."}
-else if(fs==="Database / Data"){paths=["Cloud Database Engineering → AI-assisted Data Operations","Database/Data → AI Data Engineer → GenAI Data Platform Engineer","Data → AI Platform / Data Architect"];why="Your database/data foundation is directly transferable to AI because enterprise AI depends on reliable, governed and searchable data.";skills=["Cloud data platforms","Vector databases","Python","AI data pipelines","RAG architecture"];m1="Cloud + Python + modern data";m2="Vector search + RAG pipelines";m3="Build an AI data project";five="Strong. Data and AI platform skills are a natural evolution."}
-else if(fs==="Security / IAM"){paths=["Cloud IAM → Zero Trust / AI Security","IAM → AI Security → Agentic IAM","AI Security → AI Governance / Identity Architecture"];why="AI agents and enterprise AI increase the importance of identity, authorization and security. Your IAM foundation is highly transferable.";skills=["Cloud IAM","AI security","AI identity","Agent authorization","AI governance"];m1="Cloud IAM + Zero Trust";m2="AI security and identity";m3="Agentic IAM/security project";five="Very Strong when IAM is combined with AI security and agentic systems."}
-else if(fs==="ERP / Enterprise"){paths=["Modern ERP → AI-enabled ERP Consultant","ERP → Business AI/Copilots → AI ERP Transformation","ERP + Data → AI Transformation Architect"];why="Your enterprise process knowledge is a major advantage. Add the AI capabilities of your ERP platform and AI-enabled business workflows instead of starting over.";skills=["ERP AI capabilities","Enterprise GenAI","RAG","AI workflow automation","AI governance"];m1="Learn your ERP's AI capabilities";m2="Build an AI-enabled ERP workflow";m3="Lead an AI transformation use case";five="Strong. ERP domain expertise can become more valuable when combined with AI transformation."}
-else if(fs==="Cloud / DevOps"){paths=["DevOps → Platform Engineering","DevOps → AIOps / AI Platform Engineering","AI Platform Engineer → AI Infrastructure Architect"];why="Your cloud/operations foundation is directly relevant to AI infrastructure, AIOps, observability and LLMOps.";skills=["AI platform architecture","AIOps","AI observability","LLMOps","AI cost optimization"];m1="Cloud AI services + observability";m2="AIOps / LLMOps";m3="Build an AI platform project";five="Very Strong where cloud, platform and AI infrastructure converge."}
-else{paths=[`${tech} → AI-enabled ${tech} specialist`,`${tech} → AI Application / Integration Engineer → GenAI specialist`,`${tech} → AI Solution Architect / Transformation role`];why=`Your existing ${tech} experience should be the foundation. The recommended direction is to add practical GenAI application and integration skills rather than starting over in machine learning.`;skills=["LLM APIs","RAG","AI Agents","AI Evaluation","AI-assisted development"];m1="AI fundamentals + AI-assisted work";m2="LLM APIs + RAG + vector search";m3="Build a domain-specific GenAI project";five="Strong if your current technical foundation is combined with practical GenAI application skills."}
-document.getElementById("rtitle").textContent=document.getElementById("name").value+" — AI Career Outlook";document.getElementById("rsub").textContent=`${document.getElementById("title").value} • ${years} years • ${tech} • ${ds.join(", ")}`;
-document.getElementById("ready").textContent=ready+"%";document.getElementById("res").textContent=res+"%";document.getElementById("opp").textContent=opp+"%";document.getElementById("gap").textContent=gap+"%";
-document.getElementById("summary").textContent=`AI Readiness ${ready}%. Career Resilience ${res}%. AI Opportunity ${opp}%. The assessment recommends building on your existing ${tech} experience instead of starting over.`;
-document.getElementById("paths").innerHTML=paths.map((p,i)=>`<div class="path ${i==1?"rec":""}"><b>${i==1?"★ RECOMMENDED":"PATH "+String.fromCharCode(65+i)}</b><h3>${p}</h3></div>`).join("");
-document.getElementById("why").textContent=why;document.getElementById("skills").innerHTML=skills.map((s,i)=>`<tr><td>${i<2?"High":"Priority"}</td><td><b>${s}</b></td><td>Build this capability to increase AI readiness and future-role eligibility.</td></tr>`).join("");
+if(family==="QA / Testing"){paths=["Manual/Automation QA → AI-assisted QA","Automation QA → AI Quality Engineer → AI Evaluation Engineer","QA → AI/Software Engineering → GenAI Engineer"];why=`Your ${years} years of ${primary} experience can be upgraded rather than discarded. The strongest transition is to add AI testing, LLM evaluation, agent testing and AI observability.`;skills=["Modern test automation","LLM testing","RAG & agent evaluation","Synthetic test data","AI observability"];m1="Modern automation + Python";m2="LLM/RAG testing and evaluation";m3="Build an AI quality project";five="Strong if you evolve toward AI Quality Engineering and AI evaluation."}
+else if(family==="Database / Data"){paths=["Cloud Database Engineering → AI-assisted Data Operations","Database/Data → AI Data Engineer → GenAI Data Platform Engineer","Data → AI Platform / Data Architect"];why="Your database/data foundation is directly transferable to AI because enterprise AI depends on reliable, governed and searchable data.";skills=["Cloud data platforms","Vector databases","Python","AI data pipelines","RAG architecture"];m1="Cloud + Python + modern data";m2="Vector search + RAG pipelines";m3="Build an AI data project";five="Strong. Data and AI platform skills are a natural evolution."}
+else if(family==="Security / IAM"){paths=["Cloud IAM → Zero Trust / AI Security","IAM → AI Security → Agentic IAM","AI Security → AI Governance / Identity Architecture"];why="AI agents and enterprise AI increase the importance of identity, authorization and security. Your IAM foundation is highly transferable.";skills=["Cloud IAM","AI security","AI identity","Agent authorization","AI governance"];m1="Cloud IAM + Zero Trust";m2="AI security and identity";m3="Agentic IAM/security project";five="Very Strong when IAM is combined with AI security and agentic systems."}
+else if(family==="ERP / Enterprise"){paths=["Modern ERP → AI-enabled ERP Consultant","ERP → Business AI/Copilots → AI ERP Transformation","ERP + Data → AI Transformation Architect"];why="Your enterprise process knowledge is a major advantage. Add the AI capabilities of your ERP platform and AI-enabled business workflows instead of starting over.";skills=["ERP AI capabilities","Enterprise GenAI","RAG","AI workflow automation","AI governance"];m1="Learn your ERP's AI capabilities";m2="Build an AI-enabled ERP workflow";m3="Lead an AI transformation use case";five="Strong. ERP domain expertise can become more valuable when combined with AI transformation."}
+else if(family==="Cloud / DevOps"){paths=["DevOps → Platform Engineering","DevOps → AIOps / AI Platform Engineering","AI Platform Engineer → AI Infrastructure Architect"];why="Your cloud/operations foundation is directly relevant to AI infrastructure, AIOps, observability and LLMOps.";skills=["AI platform architecture","AIOps","AI observability","LLMOps","AI cost optimization"];m1="Cloud AI services + observability";m2="AIOps / LLMOps";m3="Build an AI platform project";five="Very Strong where cloud, platform and AI infrastructure converge."}
+else{paths=[`${primary} → AI-enabled ${primary} specialist`,`${primary} → AI Application / Integration Engineer → GenAI specialist`,`${primary} → AI Solution Architect / Transformation role`];why=`Your existing ${primary} experience should be the foundation. The recommended direction is to add practical GenAI application and integration skills rather than starting over in machine learning.`;skills=["LLM APIs","RAG","AI Agents","AI Evaluation","AI-assisted development"];m1="AI fundamentals + AI-assisted work";m2="LLM APIs + RAG + vector search";m3="Build a domain-specific GenAI project";five="Strong if your current technical foundation is combined with practical GenAI application skills."}
+document.getElementById("rtitle").textContent=document.getElementById("name").value+" — AI Career Outlook";
+document.getElementById("rsub").textContent=`${document.getElementById("title").value} • ${years} years • ${primary} • ${selectedDomains.join(", ")}`;
+setScore("ready",ready);setScore("res",res);setScore("opp",opp);setScore("gap",gap);
+document.getElementById("summary").textContent=`AI Readiness is ${ready}%. Career Resilience is ${res}%. AI Opportunity is ${opp}%. The assessment recommends building on your existing ${primary} experience rather than starting over.`;
+document.getElementById("paths").innerHTML=paths.map((p,i)=>`<div class="path ${i===1?"recommended":""}"><span class="pill">${i===1?"★ RECOMMENDED":"PATH "+String.fromCharCode(65+i)}</span><h3>${p}</h3></div>`).join("");
+document.getElementById("why").textContent=why;document.getElementById("skills").innerHTML=skills.map((s,i)=>`<tr><td>${i<2?"High":"Priority"}</td><td><b>${s}</b></td><td>Build this capability to improve AI readiness and future-role eligibility.</td></tr>`).join("");
 document.getElementById("m1").textContent=m1;document.getElementById("m2").textContent=m2;document.getElementById("m3").textContent=m3;document.getElementById("five").textContent=five;
-currentResult={name:document.getElementById("name").value,email:document.getElementById("email").value,phone:document.getElementById("phone").value,title:document.getElementById("title").value,years,tech,ts,ds,ready,res,opp,gap,recommended:paths[1],skills};localStorage.setItem("jkv_"+Date.now(),JSON.stringify(currentResult));show("report")}
-function mail(){const r=currentResult;if(!r)return;const subject=encodeURIComponent("JKV AI Career Navigator Assessment - "+r.name),body=encodeURIComponent(`Consultant: ${r.name}
-Email: ${r.email}
-Phone: ${r.phone}
-Title: ${r.title}
-Experience: ${r.years} years
-Primary Technology: ${r.tech}
-Technologies: ${r.ts.join(", ")}
-Domains: ${r.ds.join(", ")}
-AI Readiness: ${r.ready}%
-Career Resilience: ${r.res}%
-AI Opportunity: ${r.opp}%
-Skill Gap: ${r.gap}%
-Recommended Career Path: ${r.recommended}
-Priority Skills: ${r.skills.join(", ")}`);location.href="mailto:?subject="+subject+"&body="+body}
-</script></body></html>
+currentResult={name:document.getElementById("name").value,email:document.getElementById("email").value,phone:document.getElementById("phone").value,title:document.getElementById("title").value,years,primary,otherTech,domains:selectedDomains,ready,res,opp,gap,recommended:paths[1],skills};
+localStorage.setItem("jkv_"+Date.now(),JSON.stringify(currentResult));go("report")}
+function setScore(id,v){const e=document.getElementById(id);e.textContent=v+"%";e.className=v>=80?"green":v>=55?"orange":"red"}
+function mail(){const r=currentResult;if(!r)return;const subject=encodeURIComponent("JKV AI Career Navigator Assessment - "+r.name);const body=encodeURIComponent(`Consultant: ${r.name}\nEmail: ${r.email}\nPhone: ${r.phone}\nTitle: ${r.title}\nExperience: ${r.years} years\nPrimary Technology: ${r.primary}\nOther Technologies: ${r.otherTech.join(", ")}\nDomains: ${r.domains.join(", ")}\nAI Readiness: ${r.ready}%\nCareer Resilience: ${r.res}%\nAI Opportunity: ${r.opp}%\nSkill Gap: ${r.gap}%\nRecommended Path: ${r.recommended}\nPriority Skills: ${r.skills.join(", ")}`);location.href="mailto:?subject="+subject+"&body="+body}
+</script>
+</body></html>
